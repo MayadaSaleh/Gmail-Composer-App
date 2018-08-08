@@ -66,7 +66,6 @@ public class ComposerInteractor implements ComposerInteractorInterface{
                         acceptedFile= true;
 
                         composerPresenterInterface.presenterResponseTosaveTofirebaseStorage(myTaskSnapShot,acceptedFile);
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

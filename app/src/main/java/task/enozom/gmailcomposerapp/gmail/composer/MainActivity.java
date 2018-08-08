@@ -30,6 +30,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -223,6 +224,8 @@ public class MainActivity extends Activity implements ComposerViewInterface{
                     getContentResolver().query(uploadedFile, null, null, null, null);
 
             int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+         //   String result = returnCursor.getString(returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+
             returnCursor.moveToFirst();
             float fileSize = returnCursor.getFloat(sizeIndex);
             float fileSizeInMB = (fileSize / 1024) / 1024;

@@ -114,11 +114,15 @@
 
     <ProgressBar
         android:id="@+id/bottom_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:progressDrawable="@drawable/custom_progress_bar"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp" />
+        android:layout_marginBottom="60dp"
+        android:max="100"
+        android:progress="0"/>
 
 
     <RelativeLayout
@@ -139,6 +143,5 @@
             android:textSize="20dp"
             android:textColor="#ffffff"/>
     </RelativeLayout>
-
 
 </RelativeLayout>
