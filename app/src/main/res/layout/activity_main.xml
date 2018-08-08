@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context="task.enozom.gmailcomposerapp.gmail.composer.MainActivity">
 
 
@@ -81,6 +82,8 @@
         android:layout_below="@+id/header"
         android:layout_marginTop="36dp"
         android:hint="Subject"
+        android:textColorHint="#808080"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -99,6 +102,8 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="26dp"
         android:hint="Compose Message"
+        android:textColor="#000000"
+        android:textColorHint="#808080"
         android:inputType="textImeMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
