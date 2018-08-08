@@ -29,6 +29,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -62,6 +63,9 @@ public class MainActivity extends Activity implements ComposerViewInterface{
     @BindView(R.id.messageContent)
     EditText messageEnteredContent;
 
+    @BindView(R.id.bottom_progress_bar)
+    ProgressBar bar;
+
     private ComposerPresenterInterface composerPresenterInterface;
 
     Dialog attachmentPopUp;
@@ -76,6 +80,7 @@ public class MainActivity extends Activity implements ComposerViewInterface{
     private UploadTask.TaskSnapshot myTaskSnapShot;
     //View  view;
 
+   private ProgressDialog progressDialog = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,7 +189,7 @@ public class MainActivity extends Activity implements ComposerViewInterface{
             } if (requestCode == CAMERA_PIC_REQUEST || requestCode == PICK_IMAGE_REQUEST || requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
 
                 filePath = data.getData();
-                uploadFile();
+                uploadFileToFirbaseStorage();
             }
         }
             else {
@@ -193,14 +198,19 @@ public class MainActivity extends Activity implements ComposerViewInterface{
         }
 
 
-        private void uploadFile() {
+        private void uploadFileToFirbaseStorage() {
             if (filePath != null) {
                 float fileSizeInMB= getFileSize(filePath);
 
                 if (fileSizeInMB > 5.0) {
                     Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.unsupported_size), Toast.LENGTH_LONG).show();
                 } else {
-                    composerPresenterInterface.presenterUploadFileToFirebaseStorage(filePath,MainActivity.this,checkattachmentType);
+                    progressDialog = new ProgressDialog(MainActivity.this);
+                    progressDialog.setTitle("Uploading");
+                    progressDialog.show();
+
+
+                    composerPresenterInterface.presenterUploadFileToFirebaseStorage(filePath,checkattachmentType);
               }
                 } else{
                     Toast.makeText(getApplicationContext(), "Error in selected file", Toast.LENGTH_LONG).show();
@@ -232,7 +242,7 @@ public class MainActivity extends Activity implements ComposerViewInterface{
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
-   private   void attachVideo(){
+   private void attachVideo(){
         Intent intent = new Intent();
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -249,5 +259,24 @@ public class MainActivity extends Activity implements ComposerViewInterface{
     public void viewResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile) {
         this.myTaskSnapShot=myTaskSnapShot;
         this.acceptedFile=acceptedFile;
+        Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploaded_successfully), Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void dismissProgressBar() {
+        progressDialog.dismiss();
+        attachmentPopUp.dismiss();
+    }
+
+    @Override
+    public void showUploadingPercentage(UploadTask.TaskSnapshot taskSnapshot) {
+
+
+        //displaying the upload progress
+        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+        bar.setProgress((int)progress);
+        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+
     }
 }

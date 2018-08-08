@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,12 +38,6 @@ public class ComposerInteractor implements ComposerInteractorInterface{
     private UploadTask.TaskSnapshot myTaskSnapShot;
 
 
-    private Context context;
-
-    public ComposerInteractor(Context context) {
-    this.context = context;
-    }
-
 
     @Override
     public void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL) {
@@ -54,11 +49,8 @@ public class ComposerInteractor implements ComposerInteractorInterface{
     }
 
     @Override
-    public void interactorUploadFileToFirebaseStorage(Uri filePath, final Context context, Boolean checkattachmentType) {
+    public void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Uploading");
-        progressDialog.show();
         StorageReference sRef;
         if (checkattachmentType == true){
             sRef = storageReference.child("messages/video.mp4");
@@ -69,28 +61,26 @@ public class ComposerInteractor implements ComposerInteractorInterface{
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        progressDialog.dismiss();
+                        composerPresenterInterface.presenterDismissDialog();
                         myTaskSnapShot = taskSnapshot;
                         acceptedFile= true;
 
                         composerPresenterInterface.presenterResponseTosaveTofirebaseStorage(myTaskSnapShot,acceptedFile);
-                        Toast.makeText(context, context.getResources().getString(R.string.uploaded_successfully), Toast.LENGTH_LONG).show();
 
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        progressDialog.dismiss();
-                        Toast.makeText(context, exception.getMessage(), Toast.LENGTH_LONG).show();
+                        composerPresenterInterface.presenterDismissDialog();
+                        Log.i("failure", "failure " + exception.getMessage());
                     }
                 })
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                         //displaying the upload progress
-                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                       composerPresenterInterface.presenterUploadingProgress(taskSnapshot);
                     }
                 });
 

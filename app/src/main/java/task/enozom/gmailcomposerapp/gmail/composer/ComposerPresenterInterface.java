@@ -12,7 +12,11 @@ import com.google.firebase.storage.UploadTask;
 public interface ComposerPresenterInterface {
 
     void presenterSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL);
-    void presenterUploadFileToFirebaseStorage(Uri filePath, Context context, Boolean checkattachmentType);
+    void presenterUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType);
 
     void presenterResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile);
+
+    void presenterDismissDialog();
+
+    void presenterUploadingProgress(UploadTask.TaskSnapshot taskSnapshot);
 }
