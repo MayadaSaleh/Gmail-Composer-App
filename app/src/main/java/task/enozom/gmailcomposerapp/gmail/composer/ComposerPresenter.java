@@ -1,10 +1,38 @@
 package task.enozom.gmailcomposerapp.gmail.composer;
 
+import android.content.Context;
+import android.net.Uri;
+
+import com.google.firebase.storage.UploadTask;
+
 /**
  * Created by Mayada on 8/8/2018.
  */
 
-public class ComposerPresenter {
+public class ComposerPresenter implements ComposerPresenterInterface {
+
+    ComposerViewInterface composerViewInterface;
+    ComposerInteractorInterface composerInteractorInterface;
 
 
+    public ComposerPresenter(ComposerViewInterface composerViewInterface) {
+        this.composerViewInterface=composerViewInterface;
+        composerInteractorInterface = new ComposerInteractor(this);
+        composerViewInterface.initView();
+    }
+
+    @Override
+    public void presenterSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL) {
+        composerInteractorInterface.interactorSaveFileToDatabase(subjectToSave,contentToSave,attachmentURL);
+    }
+
+    @Override
+    public void presenterUploadFileToFirebaseStorage(Uri filePath, Context context, Boolean checkattachmentType) {
+        composerInteractorInterface.interactorUploadFileToFirebaseStorage(filePath,context,checkattachmentType);
+    }
+
+    @Override
+    public void presenterResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile) {
+        composerViewInterface.viewResponseTosaveTofirebaseStorage(myTaskSnapShot,acceptedFile);
+    }
 }

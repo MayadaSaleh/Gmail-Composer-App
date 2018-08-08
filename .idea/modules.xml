@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Gmail-Composer-App.iml" filepath="$PROJECT_DIR$/Gmail-Composer-App.iml" />
-      <module fileurl="file://C:\Users\Mayada\Documents\GitHub\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App.iml" filepath="C:\Users\Mayada\Documents\GitHub\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Mayada\Documents\GitHub\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\app\app.iml" filepath="C:\Users\Mayada\Documents\GitHub\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\Gmail-Composer-App\app\app.iml" />
     </modules>
   </component>
 </project>

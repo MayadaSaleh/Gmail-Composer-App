@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GmailComposerApp</string>
+    <string name="unsupported_size">File maximum size is 5MB, please choose another one</string>
+    <string name="uploaded_successfully">File Uploaded Successfully</string>
+    <string name="internet_access">Please active your internet access</string>
+    <string name="check_all_parameters">Please be sure to enter all message parameters</string>
 </resources>

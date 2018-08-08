@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">تطبيق إرسال الرسائل الإليكترونية</string>
+    <string name="unsupported_size">المساحةالقصوى للملف 5 ميجابايت من فضلك أختر ملف آخر</string>
+    <string name="uploaded_successfully">لقد تم رفع الملف بنجاح</string>
+</resources>
