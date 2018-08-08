@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import task.enozom.gmailcomposerapp.MainActivity;
+import task.enozom.gmailcomposerapp.gmail.composer.MainActivity;
 import task.enozom.gmailcomposerapp.R;
 
 public class SplashScreen extends Activity {
