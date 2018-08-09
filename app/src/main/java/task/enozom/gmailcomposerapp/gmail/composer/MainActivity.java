@@ -56,14 +56,13 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     private static final int REQ_CODE_EXTERNAL_STORAGE_PERMISSION = 77;
     private static final int REQ_CODE_CAMERA_PERMISSION = 88;
 
-    PopUpFragment popUpFragment;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         composerPresenterInterface = new ComposerPresenter(this);
     }
@@ -106,9 +105,9 @@ public class MainActivity extends Activity implements ComposerViewInterface {
 
         if (checkInternetConnectivity()) {
 
-            popUpFragment = new PopUpFragment();
-            fragmentManager = getFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
+            PopUpFragment popUpFragment = new PopUpFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.animator.pop_enter, R.animator.pop_exit, R.animator.pop_enter, R.animator.pop_exit);
             fragmentTransaction.replace(R.id.main_layout, popUpFragment, "pop_up fragment");
             fragmentTransaction.addToBackStack(null);
@@ -129,6 +128,8 @@ public class MainActivity extends Activity implements ComposerViewInterface {
             if (filePath != null && subjectToSave.length() != 0 && contentToSave.length() != 0 && acceptedFile == true) {
                 composerPresenterInterface.presenterSaveFileToDatabase(subjectToSave, contentToSave, myTaskSnapShot.getDownloadUrl().toString());
                 Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.saved_successfully_database), Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(getIntent());
             } else {
                 Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.check_all_parameters), Toast.LENGTH_LONG).show();
             }
@@ -192,16 +193,26 @@ public class MainActivity extends Activity implements ComposerViewInterface {
 
     @Override
     public void dismissProgressBar() {
+//
+//            FragmentManager fragmentManager = getFragmentManager();
+//        while (fragmentManager.getBackStackEntryCount() > 0) {
+//            fragmentManager.popBackStackImmediate();
+//        }
+
+
         progressDialog.dismiss();
 
-        fragmentTransaction = fragmentManager.beginTransaction();
-        popUpFragment = (PopUpFragment) fragmentManager.findFragmentByTag("pop_up fragment");
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
+      PopUpFragment  popUpFragment = (PopUpFragment) fragmentManager.findFragmentByTag("pop_up fragment");
         fragmentTransaction.remove(popUpFragment);
         fragmentTransaction.commit();
     }
 
     @Override
     public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
             while (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStackImmediate();
