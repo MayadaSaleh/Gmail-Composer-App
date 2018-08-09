@@ -10,5 +10,4 @@ public interface ComposerInteractorInterface {
 
     void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL);
 
-    void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkAttachmentType);
 }

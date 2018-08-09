@@ -29,10 +29,6 @@ public class ComposerPresenter implements ComposerPresenterInterface {
         composerInteractorInterface.interactorSaveFileToDatabase(subjectToSave, contentToSave, attachmentURL);
     }
 
-    @Override
-    public void presenterUploadFileToFirebaseStorage(Uri filePath, Boolean checkAttachmentType) {
-        composerInteractorInterface.interactorUploadFileToFirebaseStorage(filePath, checkAttachmentType);
-    }
 
     @Override
     public void presenterResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile) {

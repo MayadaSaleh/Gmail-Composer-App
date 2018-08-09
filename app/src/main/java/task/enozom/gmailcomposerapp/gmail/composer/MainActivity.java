@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -46,7 +45,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     ProgressBar bar;
 
     private ComposerPresenterInterface composerPresenterInterface;
-
+    private UploadingAttachmentIntentService uploadingAttachmentIntentService;
     private Uri filePath;
     private Boolean acceptedFile = false;
     private Boolean checkAttachmentType = false;
@@ -60,6 +59,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     private static final int REQ_CODE_EXTERNAL_STORAGE_PERMISSION = 77;
     private static final int REQ_CODE_CAMERA_PERMISSION = 88;
     Boolean checkCloseApp = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         }
 
         composerPresenterInterface = new ComposerPresenter(this);
+        uploadingAttachmentIntentService = new UploadingAttachmentIntentService(this);
     }
 
     @Override
@@ -155,19 +156,13 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("hhhhhhhh", "nnnnnoooooo");
-
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
                 checkAttachmentType = true;
-                Log.i("hhhhhhhh", "nooooooooooo999999999");
-
             }
             if (requestCode == CAMERA_PIC_REQUEST || requestCode == PICK_IMAGE_REQUEST || requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
                 filePath = data.getData();
                 uploadFileToFirbaseStorage();
-                Log.i("hhhhhhhh", "nnnnno77777777777ooooo");
-
             }
         } else {
             Toast.makeText(this, getApplicationContext().getResources().getString(R.string.attachedError), Toast.LENGTH_SHORT);
@@ -185,7 +180,13 @@ public class MainActivity extends Activity implements ComposerViewInterface {
                 progressDialog.setTitle("Uploading");
                 progressDialog.show();
 
-                composerPresenterInterface.presenterUploadFileToFirebaseStorage(filePath, checkAttachmentType);
+                // Intent Service to upload attachement
+                Intent intent = new Intent();
+                intent.putExtra("filepath",filePath.toString());
+                intent.putExtra("checkAttachmentType",checkAttachmentType);
+                uploadingAttachmentIntentService.onHandleIntent(intent);
+
+
             }
         } else {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.attachedError), Toast.LENGTH_LONG).show();

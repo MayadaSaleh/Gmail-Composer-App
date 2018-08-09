@@ -33,7 +33,6 @@ public class ComposerInteractor implements ComposerInteractorInterface {
 
     public ComposerInteractor(ComposerPresenterInterface composerPresenterInterface) {
         this.composerPresenterInterface = composerPresenterInterface;
-
     }
 
     @Override
@@ -43,41 +42,5 @@ public class ComposerInteractor implements ComposerInteractorInterface {
         MessagePojo uploadedMessage = new MessagePojo(subjectToSave, contentToSave, attachmentURL);
         String uploadIdDatabase = mDatabase.push().getKey();
         mDatabase.child(uploadIdDatabase).setValue(uploadedMessage);
-    }
-
-    @Override
-    public void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkAttachmentType) {
-
-        storageReference = FirebaseStorage.getInstance().getReference(filePath.getLastPathSegment());
-        StorageReference sRef;
-        if (checkAttachmentType == true) {
-            sRef = storageReference.child("video.mp4");
-        } else {
-            sRef = storageReference.child("image.jpg");
-        }
-        sRef.putFile(filePath)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        myTaskSnapShot = taskSnapshot;
-                        acceptedFile = true;
-                        composerPresenterInterface.presenterResponseTosaveTofirebaseStorage(myTaskSnapShot, acceptedFile);
-                        composerPresenterInterface.presenterDismissDialog();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        composerPresenterInterface.presenterDismissDialog();
-                        Log.i("failure", "failure " + exception.getMessage());
-                    }
-                })
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        //displaying the upload progress
-                        composerPresenterInterface.presenterUploadingProgress(taskSnapshot);
-                    }
-                });
     }
 }
