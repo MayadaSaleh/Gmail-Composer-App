@@ -1,4 +1,4 @@
-package task.enozom.gmailcomposerapp.gmail.composer;
+package task.enozom.gmailcomposerapp.gmail.composer.interfaces;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,7 +13,7 @@ public interface ComposerPresenterInterface {
 
     void presenterSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL);
 
-    void presenterUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType);
+    void presenterUploadFileToFirebaseStorage(Uri filePath, Boolean checkAttachmentType);
 
     void presenterResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile);
 

@@ -14,4 +14,6 @@
     <string name="subject">عنوان الرسالة</string>
     <string name="compose">إرسال</string>
     <string name="footer_label">Enozom للبرمجة</string>
+    <string name="uploading_error">تعذر تحميل الملف، من فضلك حاول مرة أخرى</string>
+
 </resources>

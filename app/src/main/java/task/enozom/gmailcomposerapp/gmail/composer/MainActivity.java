@@ -2,7 +2,6 @@ package task.enozom.gmailcomposerapp.gmail.composer;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -17,7 +16,10 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import task.enozom.gmailcomposerapp.R;
+import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerPresenterInterface;
+import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerViewInterface;
 
 public class MainActivity extends Activity implements ComposerViewInterface {
 
@@ -45,7 +49,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
 
     private Uri filePath;
     private Boolean acceptedFile = false;
-    private Boolean checkattachmentType = false;
+    private Boolean checkAttachmentType = false;
     private UploadTask.TaskSnapshot myTaskSnapShot;
     private ProgressDialog progressDialog;
 
@@ -55,14 +59,22 @@ public class MainActivity extends Activity implements ComposerViewInterface {
 
     private static final int REQ_CODE_EXTERNAL_STORAGE_PERMISSION = 77;
     private static final int REQ_CODE_CAMERA_PERMISSION = 88;
-
-
+    Boolean checkCloseApp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
+        }
 
         composerPresenterInterface = new ComposerPresenter(this);
     }
@@ -95,6 +107,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         }
 
         if (requestCode == REQ_CODE_EXTERNAL_STORAGE_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
             Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
         }
@@ -142,14 +155,19 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("hhhhhhhh", "nnnnnoooooo");
 
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
-                checkattachmentType = true;
+                checkAttachmentType = true;
+                Log.i("hhhhhhhh", "nooooooooooo999999999");
+
             }
             if (requestCode == CAMERA_PIC_REQUEST || requestCode == PICK_IMAGE_REQUEST || requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
                 filePath = data.getData();
                 uploadFileToFirbaseStorage();
+                Log.i("hhhhhhhh", "nnnnno77777777777ooooo");
+
             }
         } else {
             Toast.makeText(this, getApplicationContext().getResources().getString(R.string.attachedError), Toast.LENGTH_SHORT);
@@ -167,7 +185,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
                 progressDialog.setTitle("Uploading");
                 progressDialog.show();
 
-                composerPresenterInterface.presenterUploadFileToFirebaseStorage(filePath, checkattachmentType);
+                composerPresenterInterface.presenterUploadFileToFirebaseStorage(filePath, checkAttachmentType);
             }
         } else {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.attachedError), Toast.LENGTH_LONG).show();
@@ -188,26 +206,31 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     public void viewResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile) {
         this.myTaskSnapShot = myTaskSnapShot;
         this.acceptedFile = acceptedFile;
-        Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploaded_successfully), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void dismissProgressBar() {
-//
-//            FragmentManager fragmentManager = getFragmentManager();
-//        while (fragmentManager.getBackStackEntryCount() > 0) {
-//            fragmentManager.popBackStackImmediate();
-//        }
 
+        if(acceptedFile == true) {
+            Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploaded_successfully), Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
 
-        progressDialog.dismiss();
+            FragmentManager fragmentManager = getFragmentManager();
+            if (fragmentManager.getBackStackEntryCount() > 0 && !checkCloseApp) {
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                PopUpFragment popUpFragment = (PopUpFragment) fragmentManager.findFragmentByTag("pop_up fragment");
+                fragmentTransaction.remove(popUpFragment);
+                fragmentTransaction.commit();
+            }
+        }else{
+            Toast.makeText(MainActivity.this,getApplicationContext().getResources().getString(R.string.uploading_error),Toast.LENGTH_SHORT).show();
+        }
+    }
 
-
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
-      PopUpFragment  popUpFragment = (PopUpFragment) fragmentManager.findFragmentByTag("pop_up fragment");
-        fragmentTransaction.remove(popUpFragment);
-        fragmentTransaction.commit();
+    @Override
+    protected void onPause() {
+        super.onPause();
+         checkCloseApp = true;
     }
 
     @Override
@@ -221,6 +244,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
             super.onBackPressed();
         }
     }
+
 
     @Override
     public void showUploadingPercentage(UploadTask.TaskSnapshot taskSnapshot) {

@@ -1,4 +1,4 @@
-package task.enozom.gmailcomposerapp.gmail.composer;
+package task.enozom.gmailcomposerapp.gmail.composer.interfaces;
 
 import com.google.firebase.storage.UploadTask;
 

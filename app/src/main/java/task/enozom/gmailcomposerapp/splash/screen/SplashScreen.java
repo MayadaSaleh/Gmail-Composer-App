@@ -1,21 +1,16 @@
 package task.enozom.gmailcomposerapp.splash.screen;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
 
-import task.enozom.gmailcomposerapp.gmail.composer.ComposerViewInterface;
 import task.enozom.gmailcomposerapp.gmail.composer.MainActivity;
 import task.enozom.gmailcomposerapp.R;
 
 public class SplashScreen extends Activity {
 
-    private static int SPLASH_TIME_OUT = 3000;
+    private final static int SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

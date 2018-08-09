@@ -14,6 +14,9 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerInteractorInterface;
+import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerPresenterInterface;
+
 
 /**
  * Created by Mayada on 8/8/2018.
@@ -43,11 +46,11 @@ public class ComposerInteractor implements ComposerInteractorInterface {
     }
 
     @Override
-    public void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType) {
+    public void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkAttachmentType) {
 
         storageReference = FirebaseStorage.getInstance().getReference(filePath.getLastPathSegment());
         StorageReference sRef;
-        if (checkattachmentType == true) {
+        if (checkAttachmentType == true) {
             sRef = storageReference.child("video.mp4");
         } else {
             sRef = storageReference.child("image.jpg");
@@ -56,11 +59,10 @@ public class ComposerInteractor implements ComposerInteractorInterface {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        composerPresenterInterface.presenterDismissDialog();
                         myTaskSnapShot = taskSnapshot;
                         acceptedFile = true;
-
                         composerPresenterInterface.presenterResponseTosaveTofirebaseStorage(myTaskSnapShot, acceptedFile);
+                        composerPresenterInterface.presenterDismissDialog();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

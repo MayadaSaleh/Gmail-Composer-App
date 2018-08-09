@@ -13,4 +13,5 @@
     <string name="subject">Subject</string>
     <string name="compose">COMPOSE</string>
     <string name="footer_label">Enozom Software</string>
+    <string name="uploading_error">There is an Error while uploading the attachement please Try again</string>
 </resources>
