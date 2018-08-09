@@ -1,11 +1,9 @@
 package task.enozom.gmailcomposerapp.gmail.composer;
 
-import android.app.ProgressDialog;
-import android.content.Context;
+
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,7 +14,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import task.enozom.gmailcomposerapp.R;
 
 /**
  * Created by Mayada on 8/8/2018.
@@ -25,6 +22,10 @@ import task.enozom.gmailcomposerapp.R;
 public class ComposerInteractor implements ComposerInteractorInterface{
 
     private ComposerPresenterInterface composerPresenterInterface;
+    private Boolean acceptedFile = false;
+    private UploadTask.TaskSnapshot myTaskSnapShot;
+    private DatabaseReference mDatabase;
+    private StorageReference storageReference;
 
 
     public ComposerInteractor(ComposerPresenterInterface composerPresenterInterface) {
@@ -32,25 +33,20 @@ public class ComposerInteractor implements ComposerInteractorInterface{
 
     }
 
-    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("messages");
-    private StorageReference storageReference= FirebaseStorage.getInstance().getReference();
-    private Boolean acceptedFile = false;
-    private UploadTask.TaskSnapshot myTaskSnapShot;
-
-
 
     @Override
     public void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL) {
-        MessagePojo uploadedMessage = new MessagePojo(subjectToSave, contentToSave, attachmentURL);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference("messages");
+        MessagePojo uploadedMessage = new MessagePojo(subjectToSave, contentToSave, attachmentURL);
         String uploadId = mDatabase.push().getKey();
         mDatabase.child(uploadId).setValue(uploadedMessage);
-
     }
 
     @Override
     public void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType) {
 
+        storageReference= FirebaseStorage.getInstance().getReference();
         StorageReference sRef;
         if (checkattachmentType == true){
             sRef = storageReference.child("messages/video.mp4");
@@ -82,6 +78,5 @@ public class ComposerInteractor implements ComposerInteractorInterface{
                        composerPresenterInterface.presenterUploadingProgress(taskSnapshot);
                     }
                 });
-
     }
 }

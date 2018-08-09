@@ -1,6 +1,5 @@
 package task.enozom.gmailcomposerapp.gmail.composer;
 
-import android.content.Context;
 import android.net.Uri;
 
 /**
@@ -10,6 +9,5 @@ import android.net.Uri;
 public interface ComposerInteractorInterface {
 
     void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL);
-
     void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType);
 }

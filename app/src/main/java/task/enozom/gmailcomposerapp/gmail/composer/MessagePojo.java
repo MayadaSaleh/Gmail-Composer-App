@@ -14,9 +14,6 @@ class MessagePojo {
         this.messageContent = messageContent;
         this.attachmentUrl= attachmentUrl;
     }
-
-
-
     public String getMessageSubject() {
         return messageSubject;
     }

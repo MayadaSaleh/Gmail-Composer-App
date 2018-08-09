@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:id="@+id/main_layout"
     tools:context="task.enozom.gmailcomposerapp.gmail.composer.MainActivity">
 
 
@@ -14,7 +15,6 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:background="#d80e02">
-
 
         <ImageView
             android:id="@+id/imageView2"
@@ -43,7 +43,7 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
-            android:text="COMPOSE"
+            android:text="@string/compose"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
@@ -81,7 +81,7 @@
         android:layout_alignStart="@+id/messageContent"
         android:layout_below="@+id/header"
         android:layout_marginTop="36dp"
-        android:hint="Subject"
+        android:hint="@string/subject"
         android:textColorHint="#808080"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,7 +101,7 @@
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="26dp"
-        android:hint="Compose Message"
+        android:hint="@string/contentMessage"
         android:textColor="#000000"
         android:textColorHint="#808080"
         android:inputType="textImeMultiLine"
@@ -138,7 +138,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="Enozom Software"
+            android:text="@string/footer_label"
             android:gravity="center"
             android:textSize="20dp"
             android:textColor="#ffffff"/>

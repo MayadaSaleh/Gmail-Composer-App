@@ -2,5 +2,16 @@
 <resources>
     <string name="app_name">تطبيق إرسال الرسائل الإليكترونية</string>
     <string name="unsupported_size">المساحةالقصوى للملف 5 ميجابايت من فضلك أختر ملف آخر</string>
-    <string name="uploaded_successfully">لقد تم رفع الملف بنجاح</string>
+    <string name="uploaded_successfully"> لقد تم تخزين الملف بنجاح</string>
+    <string name="internet_access">من فضلك تأكد من اتصالك بخدمة الانترنت</string>
+    <string name="check_all_parameters">من فضلك تأكد من إدخال جميع البيانات المطلوبة للرسالة</string>
+    <string name="attachedError">خطأ فى إرفاق الملف</string>
+    <string name="saved_successfully_database">لقد تم تخزين الملف بنجاح فى قواعد بيانات</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">أهلا </string>
+    <string name="contentMessage">إرفاق رسالة</string>
+    <string name="subject">عنوان الرسالة</string>
+    <string name="compose">إرسال</string>
+    <string name="footer_label">Enozom للبرمجة</string>
 </resources>

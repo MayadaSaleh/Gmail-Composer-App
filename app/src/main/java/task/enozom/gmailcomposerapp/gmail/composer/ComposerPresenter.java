@@ -1,6 +1,5 @@
 package task.enozom.gmailcomposerapp.gmail.composer;
 
-import android.content.Context;
 import android.net.Uri;
 
 import com.google.firebase.storage.UploadTask;

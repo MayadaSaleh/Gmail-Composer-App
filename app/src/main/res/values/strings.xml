@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">GmailComposerApp</string>
     <string name="unsupported_size">File maximum size is 5MB, please choose another one</string>
-    <string name="uploaded_successfully">File Uploaded Successfully</string>
+    <string name="uploaded_successfully">Attachment Uploaded Successfully to Firebase Storage</string>
     <string name="internet_access">Please active your internet access</string>
     <string name="check_all_parameters">Please be sure to enter all message parameters</string>
+    <string name="attachedError">Error with attaching file</string>
+    <string name="saved_successfully_database">Message Uploaded Sucessfully to Firebase Database</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="contentMessage">Compose Message</string>
+    <string name="subject">Subject</string>
+    <string name="compose">COMPOSE</string>
+    <string name="footer_label">Enozom Software</string>
 </resources>
