@@ -33,25 +33,24 @@ public class ComposerInteractor implements ComposerInteractorInterface{
 
     }
 
-
     @Override
     public void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("messages");
         MessagePojo uploadedMessage = new MessagePojo(subjectToSave, contentToSave, attachmentURL);
-        String uploadId = mDatabase.push().getKey();
-        mDatabase.child(uploadId).setValue(uploadedMessage);
+        String uploadIdDatabase = mDatabase.push().getKey();
+        mDatabase.child(uploadIdDatabase).setValue(uploadedMessage);
     }
 
     @Override
     public void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType) {
 
-        storageReference= FirebaseStorage.getInstance().getReference();
+        storageReference= FirebaseStorage.getInstance().getReference(filePath.getLastPathSegment());
         StorageReference sRef;
         if (checkattachmentType == true){
-            sRef = storageReference.child("messages/video.mp4");
+            sRef = storageReference.child("video.mp4");
         }else{
-            sRef = storageReference.child("messages/image.jpg");
+            sRef = storageReference.child("image.jpg");
         }
         sRef.putFile(filePath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
