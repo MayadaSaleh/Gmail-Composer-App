@@ -25,10 +25,7 @@ import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerPresenterI
 public class ComposerInteractor implements ComposerInteractorInterface {
 
     private ComposerPresenterInterface composerPresenterInterface;
-    private Boolean acceptedFile = false;
-    private UploadTask.TaskSnapshot myTaskSnapShot;
     private DatabaseReference mDatabase;
-    private StorageReference storageReference;
 
 
     public ComposerInteractor(ComposerPresenterInterface composerPresenterInterface) {
