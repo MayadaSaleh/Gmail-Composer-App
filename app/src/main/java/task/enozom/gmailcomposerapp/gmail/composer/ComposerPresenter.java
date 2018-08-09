@@ -15,24 +15,24 @@ public class ComposerPresenter implements ComposerPresenterInterface {
 
 
     public ComposerPresenter(ComposerViewInterface composerViewInterface) {
-        this.composerViewInterface=composerViewInterface;
+        this.composerViewInterface = composerViewInterface;
         composerInteractorInterface = new ComposerInteractor(this);
         composerViewInterface.initView();
     }
 
     @Override
     public void presenterSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL) {
-        composerInteractorInterface.interactorSaveFileToDatabase(subjectToSave,contentToSave,attachmentURL);
+        composerInteractorInterface.interactorSaveFileToDatabase(subjectToSave, contentToSave, attachmentURL);
     }
 
     @Override
     public void presenterUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType) {
-        composerInteractorInterface.interactorUploadFileToFirebaseStorage(filePath,checkattachmentType);
+        composerInteractorInterface.interactorUploadFileToFirebaseStorage(filePath, checkattachmentType);
     }
 
     @Override
     public void presenterResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile) {
-        composerViewInterface.viewResponseTosaveTofirebaseStorage(myTaskSnapShot,acceptedFile);
+        composerViewInterface.viewResponseTosaveTofirebaseStorage(myTaskSnapShot, acceptedFile);
     }
 
     @Override

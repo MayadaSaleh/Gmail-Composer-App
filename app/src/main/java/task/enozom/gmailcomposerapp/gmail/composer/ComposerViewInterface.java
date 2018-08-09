@@ -9,7 +9,10 @@ import com.google.firebase.storage.UploadTask;
 public interface ComposerViewInterface {
 
     void initView();
+
     void viewResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile);
+
     void dismissProgressBar();
+
     void showUploadingPercentage(UploadTask.TaskSnapshot taskSnapshot);
 }

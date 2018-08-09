@@ -9,11 +9,12 @@ class MessagePojo {
     private String messageContent;
     private String attachmentUrl;
 
-    public MessagePojo(String messageSubject,String messageContent, String attachmentUrl){
-        this.messageSubject= messageSubject;
+    public MessagePojo(String messageSubject, String messageContent, String attachmentUrl) {
+        this.messageSubject = messageSubject;
         this.messageContent = messageContent;
-        this.attachmentUrl= attachmentUrl;
+        this.attachmentUrl = attachmentUrl;
     }
+
     public String getMessageSubject() {
         return messageSubject;
     }

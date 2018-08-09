@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="150dp"
-    android:layout_marginTop="42dp"
     android:layout_centerHorizontal="true"
-    android:background="#ffffff"
     android:layout_marginLeft="40dp"
+    android:layout_marginTop="42dp"
+    android:background="#ffffff"
     tools:context="task.enozom.gmailcomposerapp.gmail.composer.PopUpFragment">
 
     <ImageView
@@ -53,7 +53,7 @@
         android:layout_centerHorizontal="true"
         android:text="Camera"
         android:textColor="#000000"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
     <ImageView
@@ -79,5 +79,5 @@
         android:layout_marginRight="14dp"
         android:text="Video"
         android:textColor="#000000"
-        android:textStyle="bold"/>
-    </RelativeLayout>
+        android:textStyle="bold" />
+</RelativeLayout>

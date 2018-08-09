@@ -19,7 +19,7 @@ import com.google.firebase.storage.UploadTask;
  * Created by Mayada on 8/8/2018.
  */
 
-public class ComposerInteractor implements ComposerInteractorInterface{
+public class ComposerInteractor implements ComposerInteractorInterface {
 
     private ComposerPresenterInterface composerPresenterInterface;
     private Boolean acceptedFile = false;
@@ -45,11 +45,11 @@ public class ComposerInteractor implements ComposerInteractorInterface{
     @Override
     public void interactorUploadFileToFirebaseStorage(Uri filePath, Boolean checkattachmentType) {
 
-        storageReference= FirebaseStorage.getInstance().getReference(filePath.getLastPathSegment());
+        storageReference = FirebaseStorage.getInstance().getReference(filePath.getLastPathSegment());
         StorageReference sRef;
-        if (checkattachmentType == true){
+        if (checkattachmentType == true) {
             sRef = storageReference.child("video.mp4");
-        }else{
+        } else {
             sRef = storageReference.child("image.jpg");
         }
         sRef.putFile(filePath)
@@ -58,9 +58,9 @@ public class ComposerInteractor implements ComposerInteractorInterface{
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         composerPresenterInterface.presenterDismissDialog();
                         myTaskSnapShot = taskSnapshot;
-                        acceptedFile= true;
+                        acceptedFile = true;
 
-                        composerPresenterInterface.presenterResponseTosaveTofirebaseStorage(myTaskSnapShot,acceptedFile);
+                        composerPresenterInterface.presenterResponseTosaveTofirebaseStorage(myTaskSnapShot, acceptedFile);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -74,7 +74,7 @@ public class ComposerInteractor implements ComposerInteractorInterface{
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                         //displaying the upload progress
-                       composerPresenterInterface.presenterUploadingProgress(taskSnapshot);
+                        composerPresenterInterface.presenterUploadingProgress(taskSnapshot);
                     }
                 });
     }
