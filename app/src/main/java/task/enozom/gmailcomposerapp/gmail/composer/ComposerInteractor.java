@@ -32,12 +32,20 @@ public class ComposerInteractor implements ComposerInteractorInterface {
         this.composerPresenterInterface = composerPresenterInterface;
     }
 
+    // SINGLETON Return same DatabaseReference object
+    private DatabaseReference getDatabaseReference(){
+        if(mDatabase == null){
+            mDatabase = FirebaseDatabase.getInstance().getReference("messages");
+        }
+        return mDatabase;
+    }
+
+
     @Override
     public void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL) {
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("messages");
         MessagePojo uploadedMessage = new MessagePojo(subjectToSave, contentToSave, attachmentURL);
-        String uploadIdDatabase = mDatabase.push().getKey();
-        mDatabase.child(uploadIdDatabase).setValue(uploadedMessage);
+        String uploadIdDatabase = getDatabaseReference().push().getKey();
+        getDatabaseReference().child(uploadIdDatabase).setValue(uploadedMessage);
     }
 }
