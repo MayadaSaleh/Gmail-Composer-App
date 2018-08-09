@@ -29,19 +29,4 @@ public class ComposerPresenter implements ComposerPresenterInterface {
         composerInteractorInterface.interactorSaveFileToDatabase(subjectToSave, contentToSave, attachmentURL);
     }
 
-
-    @Override
-    public void presenterResponseTosaveTofirebaseStorage(UploadTask.TaskSnapshot myTaskSnapShot, Boolean acceptedFile) {
-        composerViewInterface.viewResponseTosaveTofirebaseStorage(myTaskSnapShot, acceptedFile);
-    }
-
-    @Override
-    public void presenterDismissDialog() {
-        composerViewInterface.dismissProgressBar();
-    }
-
-    @Override
-    public void presenterUploadingProgress(UploadTask.TaskSnapshot taskSnapshot) {
-        composerViewInterface.showUploadingPercentage(taskSnapshot);
-    }
 }

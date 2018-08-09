@@ -182,8 +182,8 @@ public class MainActivity extends Activity implements ComposerViewInterface {
 
                 // Intent Service to upload attachement
                 Intent intent = new Intent();
-                intent.putExtra("filepath",filePath.toString());
-                intent.putExtra("checkAttachmentType",checkAttachmentType);
+                intent.putExtra("filepath", filePath.toString());
+                intent.putExtra("checkAttachmentType", checkAttachmentType);
                 uploadingAttachmentIntentService.onHandleIntent(intent);
 
 
@@ -212,7 +212,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     @Override
     public void dismissProgressBar() {
 
-        if(acceptedFile == true) {
+        if (acceptedFile == true) {
             Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploaded_successfully), Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
 
@@ -223,15 +223,15 @@ public class MainActivity extends Activity implements ComposerViewInterface {
                 fragmentTransaction.remove(popUpFragment);
                 fragmentTransaction.commit();
             }
-        }else{
-            Toast.makeText(MainActivity.this,getApplicationContext().getResources().getString(R.string.uploading_error),Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploading_error), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-         checkCloseApp = true;
+        checkCloseApp = true;
     }
 
     @Override

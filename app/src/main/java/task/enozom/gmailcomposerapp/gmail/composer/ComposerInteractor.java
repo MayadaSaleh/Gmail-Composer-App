@@ -25,27 +25,18 @@ import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerPresenterI
 public class ComposerInteractor implements ComposerInteractorInterface {
 
     private ComposerPresenterInterface composerPresenterInterface;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("messages");
 
 
     public ComposerInteractor(ComposerPresenterInterface composerPresenterInterface) {
         this.composerPresenterInterface = composerPresenterInterface;
     }
 
-    // SINGLETON Return same DatabaseReference object
-    private DatabaseReference getDatabaseReference(){
-        if(mDatabase == null){
-            mDatabase = FirebaseDatabase.getInstance().getReference("messages");
-        }
-        return mDatabase;
-    }
-
-
     @Override
     public void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL) {
 
         MessagePojo uploadedMessage = new MessagePojo(subjectToSave, contentToSave, attachmentURL);
-        String uploadIdDatabase = getDatabaseReference().push().getKey();
-        getDatabaseReference().child(uploadIdDatabase).setValue(uploadedMessage);
+        String uploadIdDatabase = mDatabase.push().getKey();
+        mDatabase.child(uploadIdDatabase).setValue(uploadedMessage);
     }
 }
