@@ -19,6 +19,7 @@ import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,7 +40,7 @@ import task.enozom.gmailcomposerapp.R;
 import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerPresenterInterface;
 import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerViewInterface;
 
-public class MainActivity extends Activity implements ComposerViewInterface {
+public class MainActivity extends AppCompatActivity implements ComposerViewInterface {
 
 
     @BindView(R.id.messageSubject)
@@ -76,36 +77,18 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-        ActionBar actionBar = getActionBar();
-
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-     //   actionBar.setIcon(R.drawable.note_pencil);
+       // actionBar.setHomeButtonEnabled(true);
 
+        //back button
+       actionBar.setDisplayHomeAsUpEnabled(true);
+        // action bar icon
+        actionBar.setIcon(R.drawable.ic_action_name);
+        actionBar.setDisplayShowHomeEnabled(true);
 
-
-      //  actionBar.setDisplayOptions(actionBar.getDisplayOptions()
-        //        | ActionBar.DISPLAY_SHOW_CUSTOM);
-
-        ImageView imageView = new ImageView(actionBar.getThemedContext());
-        //imageView.setScaleType(ImageView.ScaleType.CENTER);
-        imageView.setImageResource(R.drawable.note_pencil);
-     //   ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
-       //         ActionBar.LayoutParams.WRAP_CONTENT,
-         //       ActionBar.LayoutParams.WRAP_CONTENT, Gravity.LEFT
-           //     | Gravity.LEFT);
-      //  layoutParams.rightMargin = 1;
-       // imageView.setLayoutParams(layoutParams);
-        actionBar.setCustomView(imageView);
-
-
-
-
-
-
+        actionBar.setTitle(R.string.compose);
+        //actionBar.setDisplayUseLogoEnabled(true);
 
 
         // Status bar color
@@ -117,7 +100,6 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
         }
-
 
         composerPresenterInterface = new ComposerPresenter(this);
         uploadingAttachmentIntentService = new UploadingAttachmentIntentService(this);
@@ -144,7 +126,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_composer_action, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -188,11 +170,6 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
-
-
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -360,6 +337,20 @@ public class MainActivity extends Activity implements ComposerViewInterface {
        // bar.setProgress((int) progress);
         progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
         progressDialog.setCancelable(false);
+    }
 
+    @Override
+    public void viewResponseDeletionFromFirebaseStorage(Boolean checkDeletion) {
+        if(checkDeletion == true) {
+            acceptedFile = false;
+            Toast.makeText(MainActivity.this,getApplicationContext().getResources().getString(R.string.successfully_deleted),Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(MainActivity.this,getApplicationContext().getResources().getString(R.string.error_deletion),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void deleteAttachmentFromFirebaseStorage(){
+      composerPresenterInterface.presenterDeleteFileFromFirebaseStorage( myTaskSnapShot.getDownloadUrl().toString());
     }
 }

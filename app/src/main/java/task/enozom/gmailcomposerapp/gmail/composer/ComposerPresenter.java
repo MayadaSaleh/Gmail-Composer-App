@@ -29,4 +29,14 @@ public class ComposerPresenter implements ComposerPresenterInterface {
         composerInteractorInterface.interactorSaveFileToDatabase(subjectToSave, contentToSave, attachmentURL);
     }
 
+    @Override
+    public void presenterDeleteFileFromFirebaseStorage(String attachmentURL) {
+        composerInteractorInterface.interactorDeleteFileFromFirebaseStorage(attachmentURL);
+    }
+
+    @Override
+    public void presenterDeletionFromFirebaseResponse(Boolean checkDeletion) {
+        composerViewInterface.viewResponseDeletionFromFirebaseStorage(checkDeletion);
+    }
+
 }

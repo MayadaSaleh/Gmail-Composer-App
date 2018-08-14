@@ -1,17 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/attachButton"
+    <item android:id="@+id/attachButton"
         android:title="@string/attachButton"
         android:icon="@drawable/attachment_icon2"
-        android:orderInCategory="100"
-        app:showAsAction="always"></item>
+        app:showAsAction="always" />
 
-    <item
-        android:id="@+id/sendButton"
-        android:icon="@drawable/send_icon2"
+    <item android:id="@+id/sendButton"
         android:title="@string/sendButton"
-        android:orderInCategory="100"
-        app:showAsAction="always"></item>
+        android:icon="@drawable/send_icon2"
+        app:showAsAction="always" />
 
 </menu>

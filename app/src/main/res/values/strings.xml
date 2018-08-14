@@ -16,4 +16,6 @@
     <string name="uploading_error">There is an Error while uploading the attachement please Try again</string>
     <string name="sendButton">send File</string>
     <string name="attachButton">Attach File</string>
+    <string name="successfully_deleted">Attachment deleted Successfully</string>
+    <string name="error_deletion">Error in file deletion, please try again</string>
 </resources>

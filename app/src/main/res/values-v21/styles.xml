@@ -1,21 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <!--<style name="AppTheme" parent="android:Theme.Holo.Light">-->
-
-        <!--<item name="android:colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="android:statusBarColor">@color/colorPrimaryDark</item>-->
-        <!--<item name="android:textColor">#ffffff</item>-->
-    <!--</style>-->
-
-
-    <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@animator/fade_in</item>
-        <item name="android:windowExitAnimation">@animator/fade_out</item>
-    </style>
-
-    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/myTheme.ActionBar</item>
         <item name="android:actionMenuTextColor">@color/colorPrimaryDark</item>
     </style>
@@ -27,6 +12,12 @@
 
     <style name="myTheme.ActionBar.Text" parent="@android:style/TextAppearance">
         <item name="android:textColor">#ffffff</item>
+    </style>
+
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@animator/fade_in</item>
+        <item name="android:windowExitAnimation">@animator/fade_out</item>
     </style>
 
 </resources>

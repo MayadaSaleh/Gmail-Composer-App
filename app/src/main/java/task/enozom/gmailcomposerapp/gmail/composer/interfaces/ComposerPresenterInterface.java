@@ -12,4 +12,7 @@ import com.google.firebase.storage.UploadTask;
 public interface ComposerPresenterInterface {
 
     void presenterSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL);
+    void presenterDeleteFileFromFirebaseStorage(String attachmentURL);
+    void presenterDeletionFromFirebaseResponse(Boolean checkDeletion);
+
 }

@@ -9,5 +9,5 @@ import android.net.Uri;
 public interface ComposerInteractorInterface {
 
     void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL);
-
+    void interactorDeleteFileFromFirebaseStorage(String attachmentURL);
 }

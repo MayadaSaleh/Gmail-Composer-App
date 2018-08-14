@@ -26,6 +26,7 @@ public class ComposerInteractor implements ComposerInteractorInterface {
 
     private ComposerPresenterInterface composerPresenterInterface;
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("messages");
+    private  StorageReference storageReference;
 
 
     public ComposerInteractor(ComposerPresenterInterface composerPresenterInterface) {
@@ -39,4 +40,20 @@ public class ComposerInteractor implements ComposerInteractorInterface {
         String uploadIdDatabase = mDatabase.push().getKey();
         mDatabase.child(uploadIdDatabase).setValue(uploadedMessage);
     }
-}
+
+    @Override
+    public void interactorDeleteFileFromFirebaseStorage(String attachmentURL) {
+        storageReference = FirebaseStorage.getInstance().getReference().child(attachmentURL);
+        storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                composerPresenterInterface.presenterDeletionFromFirebaseResponse(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception exception) {
+                composerPresenterInterface.presenterDeletionFromFirebaseResponse(false);
+            }
+        });
+    }
+    }

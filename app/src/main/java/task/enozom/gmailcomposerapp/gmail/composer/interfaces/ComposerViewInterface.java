@@ -15,4 +15,6 @@ public interface ComposerViewInterface {
     void dismissProgressBar();
 
     void showUploadingPercentage(UploadTask.TaskSnapshot taskSnapshot);
+
+    void viewResponseDeletionFromFirebaseStorage(Boolean checkDeletion);
 }
