@@ -13,9 +13,10 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/enozom"
-        android:label="@string/app_name"
+        android:label="@string/compose"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:logo="@android:color/transparent"
         android:theme="@style/AppTheme">
         <activity android:name=".gmail.composer.MainActivity"
             android:screenOrientation="portrait"></activity>

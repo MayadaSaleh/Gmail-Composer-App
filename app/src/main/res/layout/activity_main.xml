@@ -6,73 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="task.enozom.gmailcomposerapp.gmail.composer.MainActivity">
-
-
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/imageView"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
-            android:src="@drawable/back_arrow" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignTop="@+id/textView"
-            android:layout_toEndOf="@+id/imageView2"
-            android:layout_toRightOf="@+id/imageView2"
-            android:src="@drawable/note_pencil" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView"
-            android:layout_toRightOf="@+id/imageView"
-            android:text="@string/compose"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/sendButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/attachButton"
-            android:layout_marginEnd="13dp"
-            android:layout_marginRight="13dp"
-            android:src="@drawable/send_icon2" />
-
-        <ImageView
-            android:id="@+id/attachButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignTop="@+id/textView"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@+id/sendButton"
-            android:layout_toStartOf="@+id/sendButton"
-            android:src="@drawable/attachment_icon2" />
-
-
-
-    </RelativeLayout>
-
+    tools:context=".gmail.composer.MainActivity">
 
     <EditText
         android:id="@+id/messageSubject"
@@ -100,9 +34,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
         android:hint="@string/contentMessage"
-        android:inputType="textImeMultiLine"
+        android:inputType="textMultiLine"
         android:textColor="#000000"
         android:textColorHint="#808080"
+        android:lines="8"
+        android:gravity="top|left"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

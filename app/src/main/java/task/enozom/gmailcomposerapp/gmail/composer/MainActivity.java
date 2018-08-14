@@ -1,14 +1,16 @@
 package task.enozom.gmailcomposerapp.gmail.composer;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -16,10 +18,16 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,7 +35,6 @@ import com.google.firebase.storage.UploadTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import task.enozom.gmailcomposerapp.R;
 import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerPresenterInterface;
 import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerViewInterface;
@@ -58,6 +65,9 @@ public class MainActivity extends Activity implements ComposerViewInterface {
 
     private static final int REQ_CODE_EXTERNAL_STORAGE_PERMISSION = 77;
     private static final int REQ_CODE_CAMERA_PERMISSION = 88;
+
+
+    Dialog dialog;
     Boolean checkCloseApp = false;
 
 
@@ -67,6 +77,38 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         setContentView(R.layout.activity_main);
 
 
+
+        ActionBar actionBar = getActionBar();
+
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+     //   actionBar.setIcon(R.drawable.note_pencil);
+
+
+
+      //  actionBar.setDisplayOptions(actionBar.getDisplayOptions()
+        //        | ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        ImageView imageView = new ImageView(actionBar.getThemedContext());
+        //imageView.setScaleType(ImageView.ScaleType.CENTER);
+        imageView.setImageResource(R.drawable.note_pencil);
+     //   ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+       //         ActionBar.LayoutParams.WRAP_CONTENT,
+         //       ActionBar.LayoutParams.WRAP_CONTENT, Gravity.LEFT
+           //     | Gravity.LEFT);
+      //  layoutParams.rightMargin = 1;
+       // imageView.setLayoutParams(layoutParams);
+        actionBar.setCustomView(imageView);
+
+
+
+
+
+
+
+
+        // Status bar color
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -75,6 +117,7 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
         }
+
 
         composerPresenterInterface = new ComposerPresenter(this);
         uploadingAttachmentIntentService = new UploadingAttachmentIntentService(this);
@@ -99,6 +142,60 @@ public class MainActivity extends Activity implements ComposerViewInterface {
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_composer_action, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.attachButton:
+                attachFile();
+                return true;
+
+            case R.id.sendButton:
+                sendfile();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void attachCameraImage() {
+        // check CAMERA and WRITE EXTERNAL STORAGE PERMISSIONS
+        if ((ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+        } else {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.CAMERA}, REQ_CODE_CAMERA_PERMISSION);
+        }
+    }
+
+   private void attachVideo() {
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_TAKE_GALLERY_VIDEO);
+    }
+
+   private void attachGalleryImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+
+
+
+
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
@@ -114,26 +211,55 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         }
     }
 
-    @OnClick(R.id.attachButton)
-    public void attachFile(View view) {
+    private void attachFile() {
 
         if (checkInternetConnectivity()) {
 
-            PopUpFragment popUpFragment = new PopUpFragment();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.setCustomAnimations(R.animator.pop_enter, R.animator.pop_exit, R.animator.pop_enter, R.animator.pop_exit);
-            fragmentTransaction.replace(R.id.main_layout, popUpFragment, "pop_up fragment");
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            dialog = new Dialog(this);
+
+            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+
+            dialog.setContentView(R.layout.pop_up_dialog);
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+            ImageView gallerySelected = dialog.findViewById(R.id.galleryImage);
+            gallerySelected.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attachGalleryImage();
+                }
+            });
+
+
+            ImageView cameraSelected = dialog.findViewById(R.id.cameraImage);
+            cameraSelected.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attachCameraImage();
+                }
+            });
+
+            ImageView videoSelected = dialog.findViewById(R.id.VideoImageView);
+            videoSelected.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attachVideo();
+                }
+            });
+
+            dialog.getWindow().setGravity(Gravity.TOP);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
         } else {
             Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.internet_access), Toast.LENGTH_LONG).show();
         }
     }
 
 
-    @OnClick(R.id.sendButton)
-    public void sendfile(View view) {
+    private void sendfile() {
 
         if (checkInternetConnectivity()) {
             final String subjectToSave = messageEnteredSubject.getText().toString().trim();
@@ -215,17 +341,8 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         if (acceptedFile == true) {
             Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploaded_successfully), Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
-
-            FragmentManager fragmentManager = getFragmentManager();
-            if (fragmentManager.getBackStackEntryCount() > 0 && !checkCloseApp) {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                PopUpFragment popUpFragment = (PopUpFragment) fragmentManager.findFragmentByTag("pop_up fragment");
-                fragmentTransaction.remove(popUpFragment);
-                fragmentTransaction.commit();
-            }
-        } else {
-            Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploading_error), Toast.LENGTH_SHORT).show();
-        }
+            dialog.dismiss();
+           }
     }
 
     @Override
@@ -233,19 +350,6 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         super.onPause();
         checkCloseApp = true;
     }
-
-    @Override
-    public void onBackPressed() {
-        FragmentManager fragmentManager = getFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            while (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStackImmediate();
-            }
-        } else {
-            super.onBackPressed();
-        }
-    }
-
 
     @Override
     public void showUploadingPercentage(UploadTask.TaskSnapshot taskSnapshot) {

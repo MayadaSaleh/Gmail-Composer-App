@@ -1,24 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
     <!--<style name="AppTheme" parent="android:Theme.Holo.Light">-->
+
         <!--<item name="android:colorPrimary">@color/colorPrimary</item>-->
         <!--<item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <!--<item name="android:statusBarColor">@color/colorPrimaryDark</item>-->
         <!--<item name="android:textColor">#ffffff</item>-->
     <!--</style>-->
 
-
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@animator/fade_in</item>
         <item name="android:windowExitAnimation">@animator/fade_out</item>
     </style>
-
-
-
-
-
-
 
 
 
@@ -35,11 +29,4 @@
     <style name="myTheme.ActionBar.Text" parent="@android:style/TextAppearance">
         <item name="android:textColor">#ffffff</item>
     </style>
-
-
-
-
-
-
-
 </resources>
