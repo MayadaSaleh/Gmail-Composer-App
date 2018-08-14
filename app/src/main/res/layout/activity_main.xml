@@ -10,7 +10,7 @@
 
     <EditText
         android:id="@+id/messageSubject"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/messageContent"
         android:layout_alignStart="@+id/messageContent"
@@ -19,6 +19,7 @@
         android:hint="@string/subject"
         android:textColor="#000000"
         android:textColorHint="#808080"
+        android:backgroundTint="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -28,7 +29,7 @@
 
     <EditText
         android:id="@+id/messageContent"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/messageSubject"
         android:layout_centerHorizontal="true"
@@ -40,23 +41,25 @@
         android:lines="8"
         android:gravity="top|left"
         android:scrollbars="vertical"
+        android:backgroundTint="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ProgressBar
-        android:id="@+id/bottom_progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:max="100"
-        android:progress="0"
-        android:progressDrawable="@drawable/custom_progress_bar" />
+    <!--<ProgressBar-->
+        <!--android:id="@+id/bottom_progress_bar"-->
+        <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="60dp"-->
+        <!--android:max="100"-->
+        <!--android:progress="0"-->
+        <!--android:visibility="gone"-->
+        <!--android:progressDrawable="@drawable/custom_progress_bar" />-->
 
 
     <RelativeLayout

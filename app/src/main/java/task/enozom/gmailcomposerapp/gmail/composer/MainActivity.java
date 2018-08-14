@@ -48,8 +48,8 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     @BindView(R.id.messageContent)
     EditText messageEnteredContent;
 
-    @BindView(R.id.bottom_progress_bar)
-    ProgressBar bar;
+  //  @BindView(R.id.bottom_progress_bar)
+    //ProgressBar bar;
 
     private ComposerPresenterInterface composerPresenterInterface;
     private UploadingAttachmentIntentService uploadingAttachmentIntentService;
@@ -146,7 +146,6 @@ public class MainActivity extends Activity implements ComposerViewInterface {
         getMenuInflater().inflate(R.menu.menu_composer_action, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -306,6 +305,8 @@ public class MainActivity extends Activity implements ComposerViewInterface {
                 progressDialog.setTitle("Uploading");
                 progressDialog.show();
 
+                progressDialog.setCancelable(false);
+
                 // Intent Service to upload attachement
                 Intent intent = new Intent();
                 intent.putExtra("filepath", filePath.toString());
@@ -342,7 +343,8 @@ public class MainActivity extends Activity implements ComposerViewInterface {
             Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploaded_successfully), Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
             dialog.dismiss();
-           }
+        }
+
     }
 
     @Override
@@ -355,7 +357,9 @@ public class MainActivity extends Activity implements ComposerViewInterface {
     public void showUploadingPercentage(UploadTask.TaskSnapshot taskSnapshot) {
         //displaying the upload progress
         double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-        bar.setProgress((int) progress);
+       // bar.setProgress((int) progress);
         progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+        progressDialog.setCancelable(false);
+
     }
 }
