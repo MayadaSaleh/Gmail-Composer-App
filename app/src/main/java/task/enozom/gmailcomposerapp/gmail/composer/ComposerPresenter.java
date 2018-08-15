@@ -27,7 +27,7 @@ public class ComposerPresenter implements ComposerPresenterInterface {
 
     @Override
     public void presenterDeleteFileFromFirebaseStorage(String attachmentURL, Boolean checkAttachmentType) {
-        composerInteractorInterface.interactorDeleteFileFromFirebaseStorage(attachmentURL,checkAttachmentType);
+        composerInteractorInterface.interactorDeleteFileFromFirebaseStorage(attachmentURL, checkAttachmentType);
     }
 
     @Override

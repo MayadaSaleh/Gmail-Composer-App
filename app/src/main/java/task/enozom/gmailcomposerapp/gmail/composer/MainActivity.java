@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
         //action bar back button
-       actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         // action bar icon
         actionBar.setIcon(R.drawable.ic_action_name);
         actionBar.setDisplayShowHomeEnabled(true);
@@ -148,14 +148,14 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
         }
     }
 
-   private void attachVideo() {
+    private void attachVideo() {
         Intent intent = new Intent();
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_TAKE_GALLERY_VIDEO);
     }
 
-   private void attachGalleryImage() {
+    private void attachGalleryImage() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -323,19 +323,19 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
 
     @Override
     public void viewResponseDeletionFromFirebaseStorage(Boolean checkDeletion) {
-        if(checkDeletion == true) {
+        if (checkDeletion == true) {
             acceptedFile = false;
-            Toast.makeText(MainActivity.this,getApplicationContext().getResources().getString(R.string.successfully_deleted),Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show();
 
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.upload_delete_layout);
             relativeLayout.setVisibility(View.INVISIBLE);
-        }else{
-            Toast.makeText(MainActivity.this,getApplicationContext().getResources().getString(R.string.error_deletion),Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.error_deletion), Toast.LENGTH_SHORT).show();
         }
     }
 
     @OnClick(R.id.deleteAttachment)
-     void deleteAttachmentFromFirebaseStorage(){
-      composerPresenterInterface.presenterDeleteFileFromFirebaseStorage( filePath.getLastPathSegment(), checkAttachmentType);
+    void deleteAttachmentFromFirebaseStorage() {
+        composerPresenterInterface.presenterDeleteFileFromFirebaseStorage(filePath.getLastPathSegment(), checkAttachmentType);
     }
 }

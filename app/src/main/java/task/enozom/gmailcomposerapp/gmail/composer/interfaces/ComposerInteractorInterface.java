@@ -7,5 +7,6 @@ package task.enozom.gmailcomposerapp.gmail.composer.interfaces;
 public interface ComposerInteractorInterface {
 
     void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL);
+
     void interactorDeleteFileFromFirebaseStorage(String attachmentURL, Boolean checkAttachmentType);
 }

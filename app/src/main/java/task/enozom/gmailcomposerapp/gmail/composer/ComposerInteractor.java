@@ -20,7 +20,7 @@ public class ComposerInteractor implements ComposerInteractorInterface {
 
     private ComposerPresenterInterface composerPresenterInterface;
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("messages");
-    private  StorageReference storageReference;
+    private StorageReference storageReference;
 
 
     public ComposerInteractor(ComposerPresenterInterface composerPresenterInterface) {
@@ -40,9 +40,9 @@ public class ComposerInteractor implements ComposerInteractorInterface {
         storageReference = FirebaseStorage.getInstance().getReference(attachmentURL);
         StorageReference sRef;
         if (checkAttachmentType == true) {
-            sRef=  storageReference.child("video.mp4");
+            sRef = storageReference.child("video.mp4");
         } else {
-            sRef=  storageReference.child("image.jpg");
+            sRef = storageReference.child("image.jpg");
         }
 
         sRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -57,4 +57,4 @@ public class ComposerInteractor implements ComposerInteractorInterface {
             }
         });
     }
-    }
+}

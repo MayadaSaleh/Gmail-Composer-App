@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item android:id="@+id/attachButton"
         android:title="@string/attachButton"
         android:icon="@drawable/attachment_icon2"
@@ -9,6 +10,5 @@
         android:title="@string/sendButton"
         android:icon="@drawable/send_icon2"
         app:showAsAction="always" />
-
 
 </menu>
