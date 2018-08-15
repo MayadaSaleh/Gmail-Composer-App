@@ -24,4 +24,13 @@
         <item name="android:windowExitAnimation">@animator/fade_out</item>
     </style>
 
+
+    <style name="EditTextTheme" parent="Widget.AppCompat.EditText">
+        <item name="android:colorControlActivated">#ffffff</item>
+        <item name="android:colorControlHighlight">#f2f2f2</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColor">#f33f88</item>
+    </style>
+
+
 </resources>
