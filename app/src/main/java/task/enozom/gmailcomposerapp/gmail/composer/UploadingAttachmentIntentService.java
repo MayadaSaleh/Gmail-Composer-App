@@ -34,7 +34,6 @@ public class UploadingAttachmentIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        //  MainActivity mainActivity = new MainActivity();
         if (intent != null) {
             Uri filePath = Uri.parse(intent.getExtras().getString("filepath"));
             Boolean checkAttachmentType = intent.getBooleanExtra("checkAttachmentType", false);

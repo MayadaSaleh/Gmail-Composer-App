@@ -1,8 +1,6 @@
 package task.enozom.gmailcomposerapp.gmail.composer;
 
 import android.Manifest;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -22,20 +22,21 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.storage.UploadTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import task.enozom.gmailcomposerapp.R;
 import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerPresenterInterface;
 import task.enozom.gmailcomposerapp.gmail.composer.interfaces.ComposerViewInterface;
@@ -48,9 +49,6 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
 
     @BindView(R.id.messageContent)
     EditText messageEnteredContent;
-
-  //  @BindView(R.id.bottom_progress_bar)
-    //ProgressBar bar;
 
     private ComposerPresenterInterface composerPresenterInterface;
     private UploadingAttachmentIntentService uploadingAttachmentIntentService;
@@ -79,24 +77,18 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
-       // actionBar.setHomeButtonEnabled(true);
-
-        //back button
+        //action bar back button
        actionBar.setDisplayHomeAsUpEnabled(true);
         // action bar icon
         actionBar.setIcon(R.drawable.ic_action_name);
         actionBar.setDisplayShowHomeEnabled(true);
-
+        // action bar title
         actionBar.setTitle(R.string.compose);
-        //actionBar.setDisplayUseLogoEnabled(true);
-
 
         // Status bar color
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
         }
@@ -121,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
         }
         return status;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -190,11 +181,8 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
     private void attachFile() {
 
         if (checkInternetConnectivity()) {
-
             dialog = new Dialog(this);
-
             dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
 
             dialog.setContentView(R.layout.pop_up_dialog);
             dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -228,15 +216,12 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 
-
         } else {
             Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.internet_access), Toast.LENGTH_LONG).show();
         }
     }
 
-
     private void sendfile() {
-
         if (checkInternetConnectivity()) {
             final String subjectToSave = messageEnteredSubject.getText().toString().trim();
             final String contentToSave = messageEnteredContent.getText().toString().trim();
@@ -253,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
             Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.internet_access), Toast.LENGTH_LONG).show();
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -281,16 +265,18 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
                 progressDialog = new ProgressDialog(MainActivity.this);
                 progressDialog.setTitle("Uploading");
                 progressDialog.show();
-
                 progressDialog.setCancelable(false);
+
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.upload_delete_layout);
+                relativeLayout.setVisibility(View.VISIBLE);
+                TextView fileName = (TextView) relativeLayout.findViewById(R.id.uploaded_file_name);
+                fileName.setText(filePath.getLastPathSegment());
 
                 // Intent Service to upload attachement
                 Intent intent = new Intent();
                 intent.putExtra("filepath", filePath.toString());
                 intent.putExtra("checkAttachmentType", checkAttachmentType);
                 uploadingAttachmentIntentService.onHandleIntent(intent);
-
-
             }
         } else {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.attachedError), Toast.LENGTH_LONG).show();
@@ -315,13 +301,11 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
 
     @Override
     public void dismissProgressBar() {
-
         if (acceptedFile == true) {
             Toast.makeText(MainActivity.this, getApplicationContext().getResources().getString(R.string.uploaded_successfully), Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
             dialog.dismiss();
         }
-
     }
 
     @Override
@@ -332,9 +316,7 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
 
     @Override
     public void showUploadingPercentage(UploadTask.TaskSnapshot taskSnapshot) {
-        //displaying the upload progress
         double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-       // bar.setProgress((int) progress);
         progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
         progressDialog.setCancelable(false);
     }
@@ -345,12 +327,15 @@ public class MainActivity extends AppCompatActivity implements ComposerViewInter
             acceptedFile = false;
             Toast.makeText(MainActivity.this,getApplicationContext().getResources().getString(R.string.successfully_deleted),Toast.LENGTH_SHORT).show();
 
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.upload_delete_layout);
+            relativeLayout.setVisibility(View.INVISIBLE);
         }else{
             Toast.makeText(MainActivity.this,getApplicationContext().getResources().getString(R.string.error_deletion),Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void deleteAttachmentFromFirebaseStorage(){
-      composerPresenterInterface.presenterDeleteFileFromFirebaseStorage( myTaskSnapShot.getDownloadUrl().toString());
+    @OnClick(R.id.deleteAttachment)
+     void deleteAttachmentFromFirebaseStorage(){
+      composerPresenterInterface.presenterDeleteFileFromFirebaseStorage( filePath.getLastPathSegment(), checkAttachmentType);
     }
 }

@@ -1,7 +1,5 @@
 package task.enozom.gmailcomposerapp.gmail.composer.interfaces;
 
-import android.net.Uri;
-
 /**
  * Created by Mayada on 8/8/2018.
  */
@@ -9,5 +7,5 @@ import android.net.Uri;
 public interface ComposerInteractorInterface {
 
     void interactorSaveFileToDatabase(String subjectToSave, String contentToSave, String attachmentURL);
-    void interactorDeleteFileFromFirebaseStorage(String attachmentURL);
+    void interactorDeleteFileFromFirebaseStorage(String attachmentURL, Boolean checkAttachmentType);
 }

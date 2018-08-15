@@ -18,13 +18,10 @@
         android:supportsRtl="true"
         android:logo="@android:color/transparent"
         android:theme="@style/AppTheme">
-        <activity android:name=".gmail.composer.MainActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".splash.screen.SplashScreen"
-            android:screenOrientation="portrait">
+        <activity android:name=".gmail.composer.MainActivity"></activity>
+        <activity android:name=".splash.screen.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
