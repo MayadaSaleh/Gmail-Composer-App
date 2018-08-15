@@ -6,38 +6,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-
         <item name="android:actionBarStyle">@style/myTheme.ActionBar</item>
         <item name="android:actionMenuTextColor">@color/colorPrimaryDark</item>
-        <item name="android:tabWidgetStyle">@style/ActionBarTabStyle</item>
-        <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
-        <item name="contentInsetLeft">0dp</item>
-        <item name="contentInsetStart">0dp</item>
-        <item name="contentInsetStartWithNavigation">0dp</item>
-        <item name="android:contentInsetLeft">0dp</item>
-        <item name="android:contentInsetStart">0dp</item>
-        <item name="android:contentInsetStartWithNavigation">0dp</item>
-
-
         <item name="android:colorControlHighlight">#f2f2f2</item>
         <item name="colorControlNormal">#f2f2f2</item>
-
-        <item name="android:toolbarStyle">@style/ToolbarStyle</item>
         <item name="toolbarStyle">@style/ToolbarStyle</item>
 
     </style>
 
     <style name="ToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
-        <item name="android:contentInsetStart">0dp</item>
-
         <item name="contentInsetLeft">0dp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
-        <item name="android:contentInsetLeft">0dp</item>
-        <item name="android:contentInsetStartWithNavigation">0dp</item>
-
-
     </style>
 
     <style name="myTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -46,18 +26,6 @@
 
     <style name="myTheme.ActionBar.Text" parent="@android:style/TextAppearance">
         <item name="android:textColor">#ffffff</item>
-    </style>
-
-
-    <style name="ActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
-        <item name="android:paddingLeft">2dp</item>
-        <item name="android:paddingRight">2dp</item>
-    </style>
-
-    <style name="ActionButtonStyle" parent="@android:style/Widget.Holo.ActionButton">
-        <item name="android:minWidth">0dip</item>
-        <item name="android:paddingLeft">0dip</item>
-        <item name="android:paddingRight">0dip</item>
     </style>
 
     <!--DIALOG ANIMATION STYLE -->
