@@ -15,9 +15,29 @@
         <item name="contentInsetLeft">0dp</item>
         <item name="contentInsetStart">0dp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="android:contentInsetLeft">0dp</item>
+        <item name="android:contentInsetStart">0dp</item>
+        <item name="android:contentInsetStartWithNavigation">0dp</item>
+
 
         <item name="android:colorControlHighlight">#f2f2f2</item>
         <item name="colorControlNormal">#f2f2f2</item>
+
+        <item name="android:toolbarStyle">@style/ToolbarStyle</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
+
+    </style>
+
+    <style name="ToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="android:contentInsetStart">0dp</item>
+
+        <item name="contentInsetLeft">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="android:contentInsetLeft">0dp</item>
+        <item name="android:contentInsetStartWithNavigation">0dp</item>
+
+
     </style>
 
     <style name="myTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
